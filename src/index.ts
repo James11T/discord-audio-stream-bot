@@ -1,59 +1,25 @@
 import "dotenv/config";
-import { Client, GatewayIntentBits, ActivityType } from "discord.js";
-import {
-  joinVoiceChannel,
-  createAudioPlayer,
-  createAudioResource
-} from "@discordjs/voice";
+import MusicBot from "./bot";
+import { assertNonNullable } from "./utils";
 
-const { STATUS, STREAM, TOKEN, CHAT } = process.env;
-if (!STREAM || !TOKEN || !CHAT) {
-  console.error("Some required envrionment variables were not set.");
-  process.exit(1);
-}
+assertNonNullable<string>("STREAM_URL", process.env.STREAM_URL);
+assertNonNullable<string>(
+  "STREAM_METADATA_URL",
+  process.env.STREAM_METADATA_URL
+);
+assertNonNullable<string>("TOKEN", process.env.TOKEN);
+assertNonNullable<string>("CHAT_ID", process.env.CHAT_ID);
+assertNonNullable<string>("GUILD_ID", process.env.GUILD_ID);
+assertNonNullable<string>("BOT_ID", process.env.BOT_ID);
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
-});
+const { TOKEN } = process.env;
 
-const getChannel = async (channel: string) => {
-  const discordChannel = await client.channels.fetch(channel);
-  return discordChannel;
-};
-
-client.on("ready", async () => {
-  if (!client.user) return;
-
-  console.log(`Ready as ${client.user.tag}`);
-
-  if (STATUS) {
-    client.user.setActivity(STATUS, {
-      type: ActivityType.Listening
-    });
-  }
-
-  const vc = await getChannel(CHAT);
-  if (!vc || !vc.isVoiceBased()) {
-    console.error("Failed to fetch voice channel with given ID");
-    process.exit(1);
-  }
-
-  const con = joinVoiceChannel({
-    channelId: vc.id,
-    guildId: vc.guild.id,
-    adapterCreator: vc.guild.voiceAdapterCreator
-  });
-
-  const res = createAudioResource(STREAM, { inlineVolume: true });
-  res.volume?.setVolume(1);
-  const player = createAudioPlayer();
-  player.play(res);
-  con.subscribe(player);
-});
+const bot = new MusicBot();
 
 const start = async () => {
-  client.login(TOKEN);
-  console.log("Listening");
+  bot.login(TOKEN);
 };
 
 start();
+
+export default bot;

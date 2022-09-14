@@ -6,5 +6,8 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "strict": true
+  },
+  "ts-node": {
+    "files": true
   }
 }
