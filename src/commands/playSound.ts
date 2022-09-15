@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { audioPlayer } from "../audio";
-import type { CommandInteraction } from "discord.js";
 import fs from "fs";
 import { createAudioResource } from "@discordjs/voice";
+import type { CommandInteraction } from "discord.js";
 
 const command = new SlashCommandBuilder()
   .setName("playsound")
