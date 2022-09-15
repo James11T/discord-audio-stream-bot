@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { audioPlayer, audioResource } from "../audio";
+import { audioPlayer } from "../audio";
 import type { CommandInteraction } from "discord.js";
 import fs from "fs";
 import { createAudioResource } from "@discordjs/voice";
