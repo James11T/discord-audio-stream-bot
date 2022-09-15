@@ -6,10 +6,7 @@ const getPlayerInfo = () => axios.get(STREAM_METADATA_URL);
 
 const getNowPlaying = async (): Promise<string> => {
   const res = await getPlayerInfo();
-  if (res.data && res.data.nowplaying) {
-    return res.data.nowplaying ?? "Unknown";
-  }
-  throw new Error("Invalid API response");
+  return res.data?.nowplaying ?? "Unknown";
 };
 
 const getListeners = async (): Promise<number> => {
