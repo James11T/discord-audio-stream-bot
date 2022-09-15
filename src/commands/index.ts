@@ -17,12 +17,17 @@ commands.forEach((cmd) => commandCollection.set(cmd.command.name, cmd));
 
 const deployCommands = async () => {
   console.log("Deploying commands");
-  rest
-    .put(Routes.applicationGuildCommands(BOT_ID, GUILD_ID), {
-      body: commands.map((cmd) => cmd.command.toJSON())
-    })
-    .catch(console.error);
-  console.log(`Deployed ${commands.length} commands`);
+  const body = commands.map((cmd) => cmd.command.toJSON());
+  const res = await rest.put(
+    Routes.applicationGuildCommands(BOT_ID, GUILD_ID),
+    {
+      body
+    }
+  );
+
+  const count = Array.isArray(res) ? res.length : "unknown";
+
+  console.log(`Deployed \`${count}\` commands`);
 };
 
 export { deployCommands, commands, commandCollection };

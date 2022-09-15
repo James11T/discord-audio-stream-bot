@@ -8,5 +8,3 @@ import { deployCommands } from "./commands";
 */
 
 deployCommands();
-
-process.exit(0);
