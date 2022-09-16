@@ -1,5 +1,5 @@
 import bot from "..";
-import { audioPlayer } from "../audio";
+import { audioPlayer, playRadio } from "../audio";
 import type { Client } from "discord.js";
 
 const { STATUS, CHAT_ID } = process.env;
@@ -19,6 +19,7 @@ const handler = async (client: Client<true>) => {
 
   const con = bot.joinVoiceChannel(vc);
   con.subscribe(audioPlayer);
+  playRadio();
 };
 
 export default handler;

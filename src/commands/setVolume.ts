@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { audioResource } from "../audio";
+import { setVolume } from "../audio";
 import type { CommandInteraction } from "discord.js";
 
 const command = new SlashCommandBuilder()
@@ -15,9 +15,9 @@ const command = new SlashCommandBuilder()
 
 const handler = async (interaction: CommandInteraction) => {
   const volume = interaction.options.get("volume")?.value;
-  if (volume === undefined || !audioResource.volume) return;
+  if (volume === undefined) return;
 
-  audioResource.volume.setVolume(Number(volume));
+  setVolume(Number(volume));
 
   await interaction.reply({
     content: `Set volume to \`${volume}\``,
