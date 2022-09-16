@@ -2,6 +2,8 @@ import "dotenv/config";
 import MusicBot from "./bot";
 import { assertNonNullable } from "./utils";
 
+const { NODE_ENV } = process.env;
+
 assertNonNullable<string>("STREAM_URL", process.env.STREAM_URL);
 assertNonNullable<string>(
   "STREAM_METADATA_URL",
@@ -20,6 +22,8 @@ const start = async () => {
   bot.login(TOKEN);
 };
 
-start();
+if (!NODE_ENV || NODE_ENV.toUpperCase() !== "DEPLOY") {
+  start();
+}
 
 export default bot;

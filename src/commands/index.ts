@@ -27,7 +27,7 @@ const deployCommands = async () => {
 
   const count = Array.isArray(res) ? res.length : "unknown";
 
-  console.log(`Deployed \`${count}\` commands`);
+  console.log(`Deployed ${count} commands`);
 };
 
 export { deployCommands, commands, commandCollection };
