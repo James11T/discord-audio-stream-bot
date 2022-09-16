@@ -11,15 +11,7 @@ const handler = async (client: Client<true>) => {
     bot.setActivity(STATUS);
   }
 
-  const vc = await bot.getChannelByID(CHAT_ID);
-  if (!vc || !vc.isVoiceBased()) {
-    console.error("Failed to fetch voice channel with given ID");
-    process.exit(1);
-  }
-
-  const con = bot.joinVoiceChannel(vc);
-  con.subscribe(audioPlayer);
-  playRadio();
+  bot.playRadioIn(CHAT_ID);
 };
 
 export default handler;
